@@ -1,0 +1,239 @@
+---
+import {
+  format,
+  startOfMonth,
+  endOfMonth,
+  eachDayOfInterval,
+  startOfWeek,
+  addMonths,
+  subMonths,
+} from "date-fns";
+
+// Initialisiere das heutige Datum
+let currentMonth = new Date();
+---
+
+<div
+  id="calendar"
+  class="w-full max-w-md mx-auto p-5 bg-gray-100 rounded-lg text-center"
+>
+  <div class="flex justify-between items-center text-2xl font-bold mb-5">
+    <!-- Linker Pfeil (Monat zurück), ausgerichtet an Sonntag -->
+    <button
+      id="prevMonth"
+      class="text-2xl bg-transparent border-none cursor-pointer p-1 mx-2 text-green-600 hover:bg-gray-200 rounded"
+      >←</button
+    >
+
+    <!-- Monatsname, zentriert zwischen den Pfeilen -->
+    <span id="monthYear" class="flex-1 text-center"
+      >{format(currentMonth, "MMMM yyyy")}</span
+    >
+
+    <!-- Rechter Pfeil (Monat vorwärts), ausgerichtet an Samstag -->
+    <button
+      id="nextMonth"
+      class="text-2xl bg-transparent border-none cursor-pointer p-1 mx-2 text-green-600 hover:bg-gray-200 rounded"
+      >→</button
+    >
+  </div>
+
+  <!-- Wochentage -->
+  <div class="grid grid-cols-7 gap-1 mb-2">
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      So
+    </div>
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      Mo
+    </div>
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      Di
+    </div>
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      Mi
+    </div>
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      Do
+    </div>
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      Fr
+    </div>
+    <div class="font-bold text-center p-2 bg-green-600 text-white rounded">
+      Sa
+    </div>
+  </div>
+  <!-- Tage im Monat -->
+  <div id="calendarGrid" class="grid grid-cols-7 gap-1">
+    <!-- Leere Felder für Tage vor dem ersten Tag des Monats -->
+    {
+      Array(
+        eachDayOfInterval({
+          start: startOfWeek(startOfMonth(currentMonth), { weekStartsOn: 0 }),
+          end: startOfMonth(currentMonth),
+        }).length - 1
+      )
+        .fill(null)
+        .map(() => <div class="calendar-day bg-transparent cursor-default" />)
+    }
+    <!-- Tage des aktuellen Monats -->
+    {
+      eachDayOfInterval({
+        start: startOfMonth(currentMonth),
+        end: endOfMonth(currentMonth),
+      }).map((day) => (
+        <div
+          class="calendar-day p-2 bg-white rounded cursor-pointer transition-colors duration-200 hover:bg-gray-100"
+          data-day={format(day, "yyyy-MM-dd")}
+        >
+          {format(day, "d")}
+        </div>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const prevMonthBtn = document.getElementById("prevMonth");
+    const nextMonthBtn = document.getElementById("nextMonth");
+    const monthYearSpan = document.getElementById("monthYear");
+    const calendarGrid = document.getElementById("calendarGrid");
+
+    let currentMonth = new Date();
+    let selectedDate = localStorage.getItem("selectedDate")
+      ? new Date(localStorage.getItem("selectedDate"))
+      : null;
+
+    function updateCalendar() {
+      // Berechne die Daten für den aktuellen Monat
+      const startOfCurrentMonth = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth(),
+        1
+      );
+      const endOfCurrentMonth = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth() + 1,
+        0
+      );
+
+      // Berechne den ersten Tag der Woche des Monats (Sonntag)
+      const startOfCurrentMonthWeek = new Date(startOfCurrentMonth);
+      startOfCurrentMonthWeek.setDate(
+        startOfCurrentMonth.getDate() - startOfCurrentMonth.getDay()
+      );
+
+      // Aktualisiere Monatsname und Jahr
+      monthYearSpan.textContent = currentMonth.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
+
+      // Leere das Grid
+      calendarGrid.innerHTML = "";
+
+      // Füge leere Tage hinzu
+      const emptyDays = startOfCurrentMonth.getDay();
+      for (let i = 0; i < emptyDays; i++) {
+        const emptyDay = document.createElement("div");
+        emptyDay.classList.add(
+          "calendar-day",
+          "bg-transparent",
+          "cursor-default"
+        );
+        calendarGrid.appendChild(emptyDay);
+      }
+
+      // Füge Tage des Monats hinzu
+      for (let day = 1; day <= endOfCurrentMonth.getDate(); day++) {
+        const dayElement = document.createElement("div");
+        dayElement.classList.add(
+          "calendar-day",
+          "p-2",
+          "bg-white",
+          "rounded",
+          "cursor-pointer",
+          "transition-colors",
+          "duration-200",
+          "hover:bg-gray-100"
+        );
+        dayElement.textContent = day.toString();
+
+        const currentDate = new Date(
+          currentMonth.getFullYear(),
+          currentMonth.getMonth(),
+          day
+        );
+        const formattedDate = currentDate.toISOString().split("T")[0];
+
+        dayElement.dataset.day = formattedDate;
+
+        // Markiere den ausgewählten Tag
+        if (
+          selectedDate &&
+          currentDate.toDateString() === selectedDate.toDateString()
+        ) {
+          dayElement.classList.remove("bg-white");
+          dayElement.classList.add("bg-green-600", "text-white", "font-bold");
+        }
+
+        dayElement.addEventListener("click", () => {
+          // Entferne vorherige Auswahl
+          document.querySelectorAll(".calendar-day").forEach((el) => {
+            el.classList.remove("bg-green-600", "text-white", "font-bold");
+            el.classList.add("bg-white", "hover:bg-gray-100");
+          });
+
+          // Markiere aktuell ausgewählten Tag
+          dayElement.classList.remove("bg-white", "hover:bg-gray-100");
+          dayElement.classList.add("bg-green-600", "text-white", "font-bold");
+
+          // Speichere das Datum in localStorage
+          selectedDate = currentDate;
+          localStorage.setItem("selectedDate", currentDate.toISOString());
+
+          // Broadcast-Event für mögliche andere Komponenten
+          const event = new CustomEvent("dateSelected", {
+            detail: {
+              date: formattedDate,
+            },
+          });
+          document.dispatchEvent(event);
+        });
+
+        calendarGrid.appendChild(dayElement);
+      }
+    }
+
+    // Event-Listener für Monatsnavigation
+    prevMonthBtn.addEventListener("click", () => {
+      currentMonth = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth() - 1,
+        1
+      );
+      updateCalendar();
+    });
+
+    nextMonthBtn.addEventListener("click", () => {
+      currentMonth = new Date(
+        currentMonth.getFullYear(),
+        currentMonth.getMonth() + 1,
+        1
+      );
+      updateCalendar();
+    });
+
+    // Wiederherstellung des zuletzt ausgewählten Datums
+    if (selectedDate) {
+      currentMonth = new Date(
+        selectedDate.getFullYear(),
+        selectedDate.getMonth(),
+        1
+      );
+    }
+
+    // Initialer Aufruf
+    updateCalendar();
+  });
+</script>
