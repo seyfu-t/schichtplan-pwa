@@ -162,7 +162,7 @@ let currentMonth = new Date();
         const currentDate = new Date(
           currentMonth.getFullYear(),
           currentMonth.getMonth(),
-          day
+          day+1
         );
         const formattedDate = currentDate.toISOString().split("T")[0];
 
