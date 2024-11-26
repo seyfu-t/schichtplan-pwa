@@ -10,21 +10,22 @@
 		"astro": "astro"
 	},
 	"devDependencies": {
+		"@types/tailwindcss": "^3.1.0",
 		"@astrojs/sitemap": "^2.0.2",
 		"@astrojs/tailwind": "^4.0.0",
-		"@typescript-eslint/eslint-plugin": "^6.4.0",
-		"@typescript-eslint/parser": "^6.4.0",
+		"@typescript-eslint/eslint-plugin": "^6.21.0",
+		"@typescript-eslint/parser": "^6.21.0",
 		"astro": "2.10.9",
-		"astro-compress": "^2.0.12",
-		"astro-seo": "^0.7.5",
-		"eslint": "^8.47.0",
+		"astro-compress": "^2.3.5",
+		"astro-seo": "^0.7.6",
+		"eslint": "^8.57.1",
 		"eslint-plugin-astro": "^0.28.0",
-		"eslint-plugin-jsx-a11y": "^6.7.1",
-		"prettier": "^3.0.2",
+		"eslint-plugin-jsx-a11y": "^6.10.2",
+		"prettier": "^3.4.1",
 		"prettier-plugin-astro": "^0.11.1",
-		"prettier-plugin-tailwindcss": "^0.5.3",
-		"typescript": "^5.1.6",
-		"vite-plugin-pwa": "^0.16.4"
+		"prettier-plugin-tailwindcss": "^0.5.14",
+		"typescript": "^5.7.2",
+		"vite-plugin-pwa": "^0.16.7"
 	},
 	"dependencies": {
 		"date-fns": "^4.1.0"
