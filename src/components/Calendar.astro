@@ -15,7 +15,7 @@ let currentMonth = new Date();
 
 <div
   id="calendar"
-  class="w-full max-w-md mx-auto p-5 bg-gray-100 rounded-lg text-center"
+  class="w-full max-w-md mx-auto p-5 bg-gray-100 dark:bg-gray-900 rounded-lg text-center"
 >
   <div class="flex justify-between items-center text-2xl font-bold mb-5">
     <!-- Linker Pfeil (Monat zurück), ausgerichtet an Sonntag -->
@@ -26,7 +26,7 @@ let currentMonth = new Date();
     >
 
     <!-- Monatsname, zentriert zwischen den Pfeilen -->
-    <span id="monthYear" class="flex-1 text-center"
+    <span id="monthYear" class="flex-1 text-center dark:text-white"
       >{format(currentMonth, "MMMM yyyy")}</span
     >
 
@@ -82,7 +82,7 @@ let currentMonth = new Date();
         end: endOfMonth(currentMonth),
       }).map((day) => (
         <div
-          class="calendar-day p-2 bg-white rounded cursor-pointer transition-colors duration-200 hover:bg-gray-100"
+          class="calendar-day p-2 bg-white dark:bg-black dark:text-white rounded cursor-pointer transition-colors duration-200 hover:bg-gray-100"
           data-day={format(day, "yyyy-MM-dd")}
         >
           {format(day, "d")}
@@ -151,11 +151,14 @@ let currentMonth = new Date();
           "calendar-day",
           "p-2",
           "bg-white",
+          "dark:bg-black",
+          "dark:text-white",
           "rounded",
           "cursor-pointer",
           "transition-colors",
           "duration-200",
-          "hover:bg-gray-100"
+          "hover:bg-gray-100",
+          "dark:hover:bg-gray-900"
         );
         dayElement.textContent = day.toString();
 
