@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Build and deploy PWA
+        run: |
+          docker build -t schichtplan-pwa .
+          docker run --rm -v $(pwd)/dist:/dist schichtplan-pwa
+          
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          personal_token: ${{ secrets.PAT }}
+          publish_dir: ./dist  # The directory where the build output is stored
+          publish_branch: gh-pages  # Branch for GitHub Pages
