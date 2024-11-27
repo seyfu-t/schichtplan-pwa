@@ -79,14 +79,14 @@ const ShiftSchedule: React.FC = () => {
   ];
 
   return (
-    <div className="w-full max-w-md mx-auto p-5 bg-gray-100 rounded-lg text-center">
-      <div className="flex justify-center space-x-0 mb-1">
-        <div className="shift-cell p-2 bg-white rounded-lg text-center cursor-pointer flex-1">A</div>
-        <div className="shift-cell p-2 bg-white rounded-lg text-center cursor-pointer flex-1">B</div>
-        <div className="shift-cell p-2 bg-white rounded-lg text-center cursor-pointer flex-1">C</div>
-        <div className="shift-cell p-2 bg-white rounded-lg text-center cursor-pointer flex-1">D</div>
+    <div className="w-full max-w-md mx-auto p-5 bg-gray-100 dark:bg-gray-900 rounded-lg text-center">
+      <div className="flex justify-center space-x-0 gap-2 mb-1">
+        <div className="shift-cell p-2 font-bold bg-white dark:bg-black dark:text-white rounded-lg text-center cursor-pointer flex-1">A</div>
+        <div className="shift-cell p-2 font-bold bg-white dark:bg-black dark:text-white rounded-lg text-center cursor-pointer flex-1">B</div>
+        <div className="shift-cell p-2 font-bold bg-white dark:bg-black dark:text-white rounded-lg text-center cursor-pointer flex-1">C</div>
+        <div className="shift-cell p-2 font-bold bg-white dark:bg-black dark:text-white rounded-lg text-center cursor-pointer flex-1">D</div>
       </div>
-      <div className="flex justify-center space-x-0 mt-1">
+      <div className="flex justify-center space-x-0 gap-2 mt-1">
         <div
           className={`shift-cell text-white font-extrabold p-2 rounded-lg text-center cursor-pointer flex-1 bg-green-500`}
         >
