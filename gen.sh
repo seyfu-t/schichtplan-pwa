@@ -2,7 +2,7 @@
 
 # Input SVG file
 svg_file="public/favicons/favicon.svg"
-padding_percentage=10  # Set padding percentage (e.g., 10%)
+padding_percentage=20  # Set padding percentage (e.g., 10%)
 
 # Ensure required tools are available
 if ! command -v rsvg-convert &>/dev/null || ! command -v magick convert &>/dev/null; then
