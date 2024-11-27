@@ -7,7 +7,3 @@ export enum ShiftType {
     Frei1 = "F1",
     Frei2 = "F2"
 }
-
-export type ShiftColors = {
-    [key in ShiftType]: string;
-};
