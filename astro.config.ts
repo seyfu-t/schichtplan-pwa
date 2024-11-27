@@ -19,7 +19,7 @@ export default defineConfig({
         name: "Schichtplan PWA",
         short_name: "Schichtplan",
         description: "Eine Progessive Web App (PWA) die einen 4 x 12h Schichtplan zeigt.",
-        theme_color: "#30E130",
+        theme_color: "#16A34A",
         // primary color.
         background_color: "#ffffff",
         // background color.
