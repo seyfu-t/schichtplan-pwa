@@ -1,20 +1,19 @@
 ---
-import Calendar from '../components/Calendar.astro';
-import SlotMachine from '../components/ShiftView.astro';
+import Calendar from "../components/Calendar.astro";
+import ShiftSchedule from  "../components/ShiftSchedule";
 ---
 
 <html lang="de">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Schichtplan App</title>
   </head>
   <body>
-    <header>
-    </header>
+    <header></header>
     <main>
       <Calendar />
-      <SlotMachine />
+	   <ShiftSchedule client:load></ShiftSchedule>
     </main>
   </body>
 </html>
