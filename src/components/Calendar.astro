@@ -73,7 +73,7 @@ let currentMonth = new Date();
         }).length - 1
       )
         .fill(null)
-        .map(() => <div class="calendar-day bg-transparent cursor-default" />)
+        .map(() => <div class="calendar-day bg-transparent dark:bg-black cursor-default" />)
     }
     <!-- Tage des aktuellen Monats -->
     {
@@ -139,6 +139,7 @@ let currentMonth = new Date();
         emptyDay.classList.add(
           "calendar-day",
           "bg-transparent",
+          "dark:bg-black",
           "cursor-default"
         );
         calendarGrid.appendChild(emptyDay);
