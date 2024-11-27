@@ -6,9 +6,14 @@ import sitemap from "@astrojs/sitemap";
 import compress from "astro-compress";
 import { VitePWA } from "vite-plugin-pwa";
 import react from "@astrojs/react";
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
+  output: "server",
+  adapter: node({
+    mode: "standalone"
+  }),
   integrations: [tailwind({
     configFile: "./tailwind.config.js"
   }), sitemap(), compress(), react()],
