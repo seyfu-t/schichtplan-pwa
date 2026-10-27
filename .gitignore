@@ -1,5 +1,9 @@
 # build output
 dist/
+.astro/
+
+# diagnostic exports
+_logs/
 
 # dependencies
 node_modules/
