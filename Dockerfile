@@ -6,6 +6,9 @@ COPY . .
 RUN bun run build
 
 FROM nginx:alpine AS runtime
+RUN mkdir -p /var/cache/nginx /var/run && \
+    chown -R nginx:nginx /var/cache/nginx /var/run
 COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
-COPY --from=build /app/dist /usr/share/nginx/html
+COPY --chown=nginx:nginx --from=build /app/dist /usr/share/nginx/html
+USER nginx
 EXPOSE 8080
